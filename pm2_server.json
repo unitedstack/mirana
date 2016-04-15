@@ -1,0 +1,12 @@
+{
+  "name": "mirana",
+  "watch": ["messageManager", "mq", "index.js"],
+  "ignore_watch": [],
+  "script": "index.js",
+  "env": {
+    "NODE_PATH": "server:drivers:."
+  },
+  "env_production": {
+    "NODE_ENV": "production"
+  }
+}

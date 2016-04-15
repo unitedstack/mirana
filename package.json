@@ -1,0 +1,37 @@
+{
+  "name": "mirana",
+  "description": "Websocket server.",
+  "version": "0.0.1",
+  "contributors": [
+    "gogocrow <gogocrow@163.com>",
+    "majiajun <majiajun@unitedstack.com>",
+    "Lee Yao <yaoli@unitedstack.com>"
+  ],
+  "license": "MIT",
+  "repository": "http://git.ustack.com/ustack/mirana",
+  "keywords": [
+    "Websocket",
+    "Rabbitmq"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "start": "pm2 start pm2_server.json",
+    "restart": "pm2 restart pm2_server.json"
+  },
+  "dependencies": {
+    "amqplib": "^0.4.0",
+    "bufferutil": "^1.2.1",
+    "eventemitter2": "^1.0.0",
+    "node-uuid": "^1.4.7",
+    "utf-8-validate": "^1.2.1",
+    "winston": "^2.1.1",
+    "ws": "^1.0.1"
+  },
+  "devDependencies": {
+    "istanbul": "^0.4.1",
+    "jasmine": "^2.4.1"
+  },
+  "engines": {
+    "node": ">= 5.0.0"
+  }
+}
