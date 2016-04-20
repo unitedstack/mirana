@@ -6,4 +6,5 @@ This module monitors the messages from rabbitmq and send them to the specific cl
 
 ## Usage
 cp config.sample.js config.js
+
 npm start
