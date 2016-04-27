@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var config = require('./config');
 
 var websocketConfig = config.websocket;
