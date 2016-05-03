@@ -1,6 +1,5 @@
 {
   "mq": {
-    "enabled": true,
     "remotes": ["42.62.101.195"],
     "heartbeat": 60,
     "username": "openstack",
