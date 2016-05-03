@@ -28,6 +28,7 @@ node_modules
 
 # config file.
 config.js
+config.json
 
 # Mac file
 .DS_Store
