@@ -1,6 +1,7 @@
 var config = require('../config').mq;
 var uuid = require('node-uuid');
 var amqp = require('amqplib');
+var os = require('os');
 
 function RabbitMqListener (consumer, servers, timeout) {
   this.consumer = consumer;
@@ -40,7 +41,8 @@ RabbitMqListener.prototype.connect = function (connectTarget) {
         return Promise.all(_promiseArray);
       });
       ok = ok.then(function() {
-        queueId = 'halo_' + uuid();
+        var hostname = os.hostname();
+        queueId = 'halo_' + hostname;
         return ch.assertQueue(queueId, {
           durable: false,
           autoDelete: true

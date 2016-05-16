@@ -3,6 +3,7 @@
   "watch": ["messageManager", "mq", "index.js"],
   "ignore_watch": [],
   "script": "index.js",
+  "log_date_format" : "YYYY-MM-DD HH:mm Z",
   "env": {
     "NODE_PATH": "server:drivers:."
   },
