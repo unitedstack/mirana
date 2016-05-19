@@ -2,6 +2,7 @@ var config = require('../config').mq;
 var uuid = require('node-uuid');
 var amqp = require('amqplib');
 var os = require('os');
+var logger = require('../middlewares/logger');
 
 function RabbitMqListener (consumer, servers, timeout) {
   this.consumer = consumer;
@@ -24,7 +25,7 @@ RabbitMqListener.prototype.connect = function (connectTarget) {
       conn.close();
     });
     conn.on('error', function (err) {
-      console.warn(err);
+      logger.error(err);
     });
     conn.on('close', function() {
       that.reconnect(that.currentServer);
@@ -63,7 +64,7 @@ RabbitMqListener.prototype.connect = function (connectTarget) {
       });
     });
   }, function (err) {
-    console.warn(err);
+    logger.error(err);
     var nextTarget = that.getAvailableServer(that.currentServer);
     that.reconnect(nextTarget);
   }).then(null, console.warn);

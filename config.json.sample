@@ -11,6 +11,8 @@
   },
   "websocket": {
     "port": 5679
+  },
+  "log": {
+    "errorLog": "/var/log/mirana/error.log"
   }
 }
-

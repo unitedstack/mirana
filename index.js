@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 var config = require('./config');
+var logger = require('./middlewares/logger');
 
 var websocketConfig = config.websocket;
 var mqConfig = config.mq;
@@ -30,6 +31,6 @@ wss.on('connection', function connection(ws) {
     msgManager.removeListener(listener, _msgDispatcher);
   };
   ws.onerror = function (err) {
-    console.log(err);
+    logger.error(err);
   };
 });
