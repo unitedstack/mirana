@@ -65,6 +65,9 @@ MessageManager.prototype.msgFormatter = function (msg) {
     case 'floatingip':
     case 'port':
     case 'router':
+    case 'loadbalancer':
+    case 'listener':
+    case 'pool':
       ret = neutronMsgHandler.formatter(msg, eventTypeArray);
       break;
     default:
