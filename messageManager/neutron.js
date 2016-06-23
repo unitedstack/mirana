@@ -137,6 +137,17 @@ function poolFormatter (msg, originMsg) {
   return msg;
 }
 
+function memberFormatter (msg, originMsg) {
+  if (msg.action === 'create' || msg.action === 'delete') {
+    msg = baseFormatter(msg, originMsg);
+  } else if (msg.action === 'update'){
+    msg.resource_id = msg.stage === 'start' ? originMsg.payload.id : originMsg.payload.listener.id;
+  } else {
+    msg = null;
+  }
+  return msg;
+}
+
 exports.formatter = function (originMsg, eventTypeArray) {
   var message = {};
   message.resource_type = eventTypeArray[0];
@@ -166,6 +177,9 @@ exports.formatter = function (originMsg, eventTypeArray) {
       break;
     case 'pool':
       message = poolFormatter(message, originMsg);
+      break;
+    case 'member':
+      message = memberFormatter(message, originMsg);
       break;
     default:
       message = null;

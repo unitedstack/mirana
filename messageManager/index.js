@@ -68,6 +68,7 @@ MessageManager.prototype.msgFormatter = function (msg) {
     case 'loadbalancer':
     case 'listener':
     case 'pool':
+    case 'member':
       ret = neutronMsgHandler.formatter(msg, eventTypeArray);
       break;
     default:
