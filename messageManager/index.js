@@ -69,6 +69,7 @@ MessageManager.prototype.msgFormatter = function (msg) {
     case 'listener':
     case 'pool':
     case 'member':
+    case 'healthmonitor':
       ret = neutronMsgHandler.formatter(msg, eventTypeArray);
       break;
     default:

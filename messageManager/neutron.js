@@ -130,7 +130,7 @@ function poolFormatter (msg, originMsg) {
   if (msg.action === 'create' || msg.action === 'delete') {
     msg = baseFormatter(msg, originMsg);
   } else if (msg.action === 'update'){
-    msg.resource_id = msg.stage === 'start' ? originMsg.payload.id : originMsg.payload.listener.id;
+    msg.resource_id = msg.stage === 'start' ? originMsg.payload.id : originMsg.payload.pool.id;
   } else {
     msg = null;
   }
@@ -141,7 +141,18 @@ function memberFormatter (msg, originMsg) {
   if (msg.action === 'create' || msg.action === 'delete') {
     msg = baseFormatter(msg, originMsg);
   } else if (msg.action === 'update'){
-    msg.resource_id = msg.stage === 'start' ? originMsg.payload.id : originMsg.payload.listener.id;
+    msg.resource_id = msg.stage === 'start' ? originMsg.payload.id : originMsg.payload.member.id;
+  } else {
+    msg = null;
+  }
+  return msg;
+}
+
+function healthmonitorFormatter (msg, originMsg) {
+  if (msg.action === 'create' || msg.action === 'delete') {
+    msg = baseFormatter(msg, originMsg);
+  } else if (msg.action === 'update'){
+    msg.resource_id = msg.stage === 'start' ? originMsg.payload.id : originMsg.payload.healthmonitor.id;
   } else {
     msg = null;
   }
@@ -180,6 +191,9 @@ exports.formatter = function (originMsg, eventTypeArray) {
       break;
     case 'member':
       message = memberFormatter(message, originMsg);
+      break;
+    case 'healthmonitor':
+      message = healthmonitorFormatter(message, originMsg);
       break;
     default:
       message = null;
