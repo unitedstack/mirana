@@ -24,6 +24,7 @@ MessageManager.prototype.getListenerName = function (msg) {
     case 'image.delete':
       return msg.payload.owner;
     case 'port.create.end':
+    case 'port.update.end':
       return msg.payload.port.tenant_id;
     default:
       return msg._context_project_id;
@@ -70,6 +71,7 @@ MessageManager.prototype.msgFormatter = function (msg) {
     case 'pool':
     case 'member':
     case 'healthmonitor':
+    case 'security_group':
       ret = neutronMsgHandler.formatter(msg, eventTypeArray);
       break;
     default:
@@ -79,11 +81,7 @@ MessageManager.prototype.msgFormatter = function (msg) {
 };
 
 MessageManager.prototype.isIgnoredMsg = function (msg) {
-  if (this.ignoreList.indexOf(msg.event_type) > -1) {
-    return true;
-  } else {
-    return false;
-  }
+  return this.ignoreList.indexOf(msg.event_type) > -1;
 };
 
 module.exports = MessageManager;

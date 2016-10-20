@@ -21,6 +21,7 @@ function baseFormatter (msg, originMsg, type) {
 function portFormatter (msg, originMsg) {
   switch (msg.action) {
     case 'create':
+    case 'update':
       if (!originMsg.payload.port.id) {
         msg = null;
       } else {
@@ -159,6 +160,17 @@ function healthmonitorFormatter (msg, originMsg) {
   return msg;
 }
 
+function securityGroupFormatter (msg, originMsg) {
+  if (msg.action === 'create' || msg.action === 'delete') {
+    msg = baseFormatter(msg, originMsg);
+  } else if (msg.action === 'update'){
+    msg.resource_id = msg.stage === 'start' ? originMsg.payload.id : originMsg.payload.security_group.id;
+  } else {
+    msg = null;
+  }
+  return msg;
+}
+
 exports.formatter = function (originMsg, eventTypeArray) {
   var message = {};
   message.resource_type = eventTypeArray[0];
@@ -194,6 +206,9 @@ exports.formatter = function (originMsg, eventTypeArray) {
       break;
     case 'healthmonitor':
       message = healthmonitorFormatter(message, originMsg);
+      break;
+    case 'security_group':
+      message = securityGroupFormatter(message, originMsg);
       break;
     default:
       message = null;
