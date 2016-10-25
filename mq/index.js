@@ -1,3 +1,5 @@
+'use strict';
+
 var config = require('../config').mq;
 var uuid = require('node-uuid');
 var amqp = require('amqplib');
@@ -19,6 +21,7 @@ RabbitMqListener.prototype.connect = function (connectTarget) {
     this.currentServer = connectTarget;
   }
   var url = 'amqp://' + config.username + ':' + config.password + '@' + this.currentServer + ':' + config.port + '/?heartbeat=' + config.heartbeat;
+
   amqp.connect(url).then(function(conn) {
     that.reconnectTimeout = 1000;
     process.once('SIGINT', function() {
@@ -30,7 +33,25 @@ RabbitMqListener.prototype.connect = function (connectTarget) {
     conn.on('close', function() {
       that.reconnect(that.currentServer);
     });
-    conn.createChannel().then(function(ch) {
+    Promise.all(
+      config.sourceExchanges.map(s=>{
+        conn.createChannel().then(ch=>{
+          ch.on('error',logger.error);
+          ch.checkExchange(s).then(()=>{
+            ch.close();
+          }).catch(()=>{
+            conn.createChannel().then(chNew=>{
+              ch.on('error',logger.error);
+              chNew.assertExchange(s,'topic').then(()=>{
+                chNew.close();
+              })
+            })
+          })
+        })
+      })
+    ).then(()=>{
+      return conn.createChannel();
+    }).then(function(ch) {
       var ok = ch.assertExchange('halo', 'fanout', {
         alternateExchange: 'notifications.*'
       });
