@@ -71,18 +71,10 @@ function floatingipFormatter (msg, originMsg) {
 function routerFormatter (msg, originMsg) {
   if (originMsg.event_type === 'router.update.start') {
     msg.resource_id = originMsg.payload.id;
-    if (originMsg.payload.router.external_gateway_info && Object.keys(originMsg.payload.router.external_gateway_info).length > 0) {
-      msg.action = 'set_gateway';
-    } else {
-      msg.action = 'clear_gateway';
-    }
+    msg.action = 'router_update_start';
   } else if (originMsg.event_type === 'router.update.end') {
     msg.resource_id = originMsg.payload.router.id;
-    if (originMsg.payload.router.external_gateway_info && Object.keys(originMsg.payload.router.external_gateway_info).length > 0) {
-      msg.action = 'set_gateway';
-    } else {
-      msg.action = 'clear_gateway';
-    }
+    msg.action = 'router_update_end';
   } else if (msg.action === 'interface') {
     msg.resource_id = originMsg.payload.router_interface.id;
     msg.subnet_id = originMsg.payload.router_interface.subnet_id;
