@@ -15,7 +15,7 @@ mq.connect();
 
 // boot a websocket server
 var WebSocketServer = require('ws').Server;
-var wss = new WebSocketServer({ port: websocketConfig.port });
+var wss = new WebSocketServer({ port: websocketConfig.port, host: websocketConfig.host });
 wss.on('connection', function connection(ws) {
   var listener;
   var _msgDispatcher = msgManager.msgDispatcher.bind(undefined, ws);

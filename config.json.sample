@@ -10,7 +10,8 @@
     "maxTimeoutLimit": 120000
   },
   "websocket": {
-    "port": 5679
+    "port": 5679,
+    "host": "0.0.0.0"
   },
   "log": {
     "errorLog": "/var/log/mirana/error.log"
