@@ -7,7 +7,8 @@
     "port": 5672,
     "sourceExchanges": ["nova", "neutron", "cinder", "glance"],
     "reconnectTimeout": 1000,
-    "maxTimeoutLimit": 120000
+    "maxTimeoutLimit": 120000,
+    "exchangeDurable": false
   },
   "websocket": {
     "port": 5679,

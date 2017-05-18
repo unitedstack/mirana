@@ -42,7 +42,9 @@ RabbitMqListener.prototype.connect = function (connectTarget) {
           }).catch(()=>{
             conn.createChannel().then(chNew=>{
               ch.on('error',logger.error);
-              chNew.assertExchange(s,'topic').then(()=>{
+              chNew.assertExchange(s,'topic',{
+                durable: config.exchangeDurable === true
+              }).then(()=>{
                 chNew.close();
               })
             })
@@ -53,7 +55,8 @@ RabbitMqListener.prototype.connect = function (connectTarget) {
       return conn.createChannel();
     }).then(function(ch) {
       var ok = ch.assertExchange('halo', 'fanout', {
-        alternateExchange: 'notifications.*'
+        alternateExchange: 'notifications.*',
+        durable: config.exchangeDurable === true
       });
       ok.then(function() {
         var _promiseArray = [];
