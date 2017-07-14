@@ -5,6 +5,7 @@ var novaMsgHandler = require('./nova');
 var cinderMsgHandler = require('./cinder');
 var glanceMsgHandler = require('./glance');
 var neutronMsgHandler = require('./neutron');
+var heatMsgHandler = require('./heat');
 
 function MessageManager () {
   EventEmitter.call(this);
@@ -73,6 +74,9 @@ MessageManager.prototype.msgFormatter = function (msg) {
     case 'healthmonitor':
     case 'security_group':
       ret = neutronMsgHandler.formatter(msg, eventTypeArray);
+      break;
+    case 'orchestration':
+      ret = heatMsgHandler.formatter(msg, eventTypeArray);
       break;
     default:
       ret = null;
