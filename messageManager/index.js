@@ -21,6 +21,9 @@ MessageManager.prototype.msgDispatcher = function (ws, msg) {
 };
 
 MessageManager.prototype.getListenerName = function (msg) {
+  if(msg.event_type.indexOf('orchestration.stack')>=0){
+    return msg._context_tenant_id;
+  }
   switch (msg.event_type) {
     case 'image.delete':
       return msg.payload.owner;
