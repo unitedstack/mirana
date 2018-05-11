@@ -25,6 +25,9 @@ MessageManager.prototype.getListenerName = function (msg) {
     return msg._context_tenant_id;
   }
   switch (msg.event_type) {
+    case 'compute.instance.resize.confirm.start':
+    case 'compute.instance.resize.confirm.end':
+      return msg.payload.tenant_id;
     case 'image.delete':
       return msg.payload.owner;
     case 'port.create.end':
